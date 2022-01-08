@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Master</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script>
+    function findAnswer() {
+      import queryString from 'query-string'; // import the queryString class
+        t = document.getElementById("text").value;
+        q = document.getElementById("question").value;
+        fetch('/qafinder', {
+  method: 'post',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+  body: queryString.stringify({question: q,text: t})
+}).then(res => res.text())
+  .then(res => console.log(res));
+        
+    }
+  </script>
+</head>
+
+<body>
+  <br>
+  <center><h1>QA Master</h1></center>  
+  <br><br>
+  <center>
+
+    <article class="message">
+      <div class="message-header">
+        <p>Question Answering with BERT</p>
+      </div>
+      <form action="/qafinder" method="post">
+      <div class="message-body">
+        <textarea class="textarea is-success" placeholder="Text Input .." id="text" name="text" required  >{{ text }}</textarea>
+        <br><br>
+        <input class="input is-success" id="question" type="text" placeholder="Question" name="question" required >
+
+      </div>
+    </article>
+    <button class="button is-success" onclick="findAnswer()">Find Answer</button>
+    <br><br>
+     </form>
+    <div class="box">
+      {{ answer }} 
+    </div>
+
+  </center>
+
+</body>
+
+</html>
